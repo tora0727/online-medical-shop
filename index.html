@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>MediCart Vendor Panel</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <div class="layout">
+
+ <div class="sidebar">
+ <h2>MediCart</h2>
+ <p>Vendor Panel</p>
+ <button id="btn_overview" class="tabBtn active" onclick="showTab('overview')">Overview</button>
+ <button id="btn_medicines" class="tabBtn" onclick="showTab('medicines')">My Medicines</button>
+ <button id="btn_orders" class="tabBtn" onclick="showTab('orders')">Orders</button>
+ </div>
+
+ <div class="content">
+ <p id="message"></p>
+
+ <div id="overview" class="panel">
+ <h1>Overview</h1>
+ <div class="stats">
+ <div class="stat"><b id="totalMeds">0</b><span>Medicines listed</span></div>
+ <div class="stat"><b id="lowStock">0</b><span>Low stock (under 10)</span></div>
+ <div class="stat"><b id="pendingOrders">0</b><span>Pending orders</span></div>
+ <div class="stat"><b id="revenue">0</b><span>Revenue (Tk)</span></div>
+ </div>
+ <div class="box">
+ <h3>Needs your attention</h3>
+ <div id="alerts"></div>
+ </div>
+ </div>
+
+
+ <div id="medicines" class="panel hidden">
+ <h1>My Medicines</h1>
+
+ <div class="box">
+ <h3 id="formTitle">Add a Medicine</h3>
+ <form id="medForm" novalidate>
+ <input type="hidden" id="editId">
+
+ <div class="form-group">
+ <label for="name">Medicine Name</label>
+ <input type="text" id="name" placeholder="e.g. Napa 500mg">
+ <span class="error" id="nameError"></span>
+ </div>
+
+ <div class="form-group">
+ <label for="category">Category</label>
+ <select id="category">
+ <option value="">Select</option>
+ <option value="Pain relief">Pain relief</option>
+ <option value="Antibiotic">Antibiotic</option>
+ <option value="Vitamins">Vitamins</option>
+ <option value="Cold and flu">Cold and flu</option>
+ <option value="Digestive">Digestive</option>
+ <option value="Other">Other</option>
+ </select>
+ <span class="error" id="categoryError"></span>
+ </div>
+
+ <div class="form-group">
+ <label for="price">Price (Tk)</label>
+ <input type="text" id="price" placeholder="e.g. 5">
+ <span class="error" id="priceError"></span>
+ </div>
+
+ <div class="form-group">
+ <label for="stock">Stock (units)</label>
+ <input type="text" id="stock" placeholder="e.g. 100">
+ <span class="error" id="stockError"></span>
+ </div>
+
+ <div class="form-group">
+ <label for="expiry">Expiry Date</label>
+ <input type="date" id="expiry">
+ <span class="error" id="expiryError"></span>
+ </div>
+
+ <button type="submit" id="saveBtn">Add Medicine</button>
+ <button type="button" id="cancelBtn" class="grayBtn hidden" onclick="resetForm()">Cancel Edit</button>
+ </form>
+ </div>
+
+ <div class="toolbar">
+ <input type="text" id="search" placeholder="Search by name" oninput="renderMedicines()">
+ <select id="filterCategory" onchange="renderMedicines()">
+ <option value="">All categories</option>
+ <option value="Pain relief">Pain relief</option>
+ <option value="Antibiotic">Antibiotic</option>
+ <option value="Vitamins">Vitamins</option>
+ <option value="Cold and flu">Cold and flu</option>
+ <option value="Digestive">Digestive</option>
+ <option value="Other">Other</option>
+ </select>
+ </div>
+
+ <div class="tableWrap">
+ <table>
+ <thead>
+ <tr>
+ <th>Name</th><th>Category</th><th>Price</th><th>Stock</th>
+ <th>Expiry</th><th>Status</th><th>Actions</th>
+ </tr>
+ </thead>
+ <tbody id="medBody"></tbody>
+ </table>
+ <p id="medEmpty" class="emptyText hidden">No medicines found.</p>
+ </div>
+ </div>
+
+ 
+ <div id="orders" class="panel hidden">
+ <h1>Orders</h1>
+ <div class="toolbar">
+ <select id="orderFilter" onchange="renderOrders()">
+ <option value="">All orders</option>
+ <option value="Pending">Pending</option>
+ <option value="Packed">Packed</option>
+ <option value="Delivered">Delivered</option>
+ <option value="Cancelled">Cancelled</option>
+ </select>
+ </div>
+ <div class="tableWrap">
+ <table>
+ <thead>
+ <tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr>
+ </thead>
+ <tbody id="orderBody"></tbody>
+ </table>
+ <p id="orderEmpty" class="emptyText hidden">No orders found.</p>
+ </div>
+ </div>
+
+ </div>
+ </div>
+ <script src="script.js"></script>
+</body>
+</html>
